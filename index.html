@@ -123,6 +123,7 @@ button,input,select{font:inherit;color:inherit}
 .chao{color:var(--muted);font-size:13px;margin-top:2px}
 .catrow{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
 .cat{font-size:12px;line-height:1.5;padding:0 7px;border-radius:5px;border:1px solid transparent;white-space:nowrap}
+.cwarn{background:var(--drop-bg);color:var(--drop);font-weight:600}
 .cdue{background:var(--due-bg);color:var(--due);font-weight:600}
 .clate{background:var(--late-bg);color:var(--late);font-weight:600}
 .cnew{background:var(--new-bg);color:var(--new);font-weight:600}
@@ -384,7 +385,7 @@ function cycTable(k){
   if (!k.cats) return "";
   return '<div class="cyc"><h3>Chu kỳ mua theo ngành hàng</h3><table><thead><tr><th>Ngành</th><th>Trạng thái</th><th>Số ngày mua</th><th>Chu kỳ</th><th>Đã qua</th><th>Mặt hàng hay mua</th><th>Khuyến nghị</th></tr></thead><tbody>'
    + k.cats.map(c => '<tr><td><b>'+esc(c.ten)+'</b></td><td><span class="cat '+(CAT_CLASS[c.tt]||"cok")+'">'+esc(CAT_WORD[c.tt]||c.tt)+'</span></td><td>'+(c.n ?? 0)+'</td><td>'
-     +(c.chuky != null ? '~'+Math.max(1,Math.round(c.chuky))+' ngày' : '–')+'</td><td>'+(c.ngay != null ? c.ngay+' ngày' : '–')+'</td><td>'+esc(c.top || "–")+'</td><td>'+esc(c.kn || "")+'</td></tr>').join("")
+     +(c.chuky != null ? '~'+Math.max(1,Math.round(c.chuky))+' ngày' : '–')+'</td><td>'+(c.ngay != null ? c.ngay+' ngày' : '–')+'</td><td>'+esc(c.top || "–")+(c.life ? ' <span class="cat '+(c.life === "Ngừng KD" ? "clate" : "cwarn")+'">'+esc(c.life === "Ngừng KD" ? "đã ngừng" : c.life === "Sắp cắt mã" ? "sắp cắt mã" : "hàng tặng")+'</span>' : '')+'</td><td>'+esc(c.kn || "")+'</td></tr>').join("")
    + '</tbody></table></div>';
 }
 function rowHTML(k, open){
